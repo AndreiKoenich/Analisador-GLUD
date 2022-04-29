@@ -1275,8 +1275,6 @@ void inicia_programa() /* Inicia a leitura dos arquivos de entrada. */
         printf("LINGUAGENS FORMAIS E AUTOMATOS\n"); /* Impressao do menu inicial. */
         printf("\nTRABALHO FINAL PARTE 2\n");
         printf("\nAndrei Pochmann Koenich\n");
-        printf("Gustavo Spellmeier Neves\n");
-        printf("Pedro Company Beck\n");
         printf("\n------------------------------------------------\n");
 
         abre_arquivo(); /* Abre e inicia a leitura do arquivo de entrada. */
