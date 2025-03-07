@@ -5,11 +5,11 @@ function main (): number {
     console.log("PROJETO DE LINGUAGENS FORMAIS E AUTOMATOS")
     console.log("\nAUTOR: Andrei Pochmann Koenich\n")
     console.log("-----------------------------------------------\n")
-    iniciaLeitura()
+    readInputFile()
     return 0
 }
 
-function iniciaLeitura(): void {
+function readInputFile(): void {
     console.log("Digite o nome do arquivo de entrada, contendo a GLUD:")
     const fileName = getFileName()
 
@@ -18,7 +18,6 @@ function iniciaLeitura(): void {
         if (err) throw err;
         console.log(data.toString());
     });
-
 }
 
 main()
