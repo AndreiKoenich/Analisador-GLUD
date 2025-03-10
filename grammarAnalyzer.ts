@@ -38,7 +38,7 @@ function getFileData(data: string): void {
         grammarInfo.productionRules.push(fileLines[i])
 
     controlFileData(grammarInfo, secondLineInfo)
-    printGrammarInfo(grammarInfo)
+    //printGrammarInfo(grammarInfo)
 }
 
 function readInputFile(): void {

@@ -1,6 +1,10 @@
 import * as Constants from "./constants"
 import * as Classes from "./classes"
 
+function hasDuplicateElements (stringArray: string[]) : boolean {
+    return new Set(stringArray).size != stringArray.length 
+}
+
 export function printGrammarInfo (grammarInfo: Classes.InputFileInfo) : void {
     console.log(grammarInfo.grammarName)
     console.log(grammarInfo.initialVariable)
@@ -39,6 +43,17 @@ function testStringArrayIntersection(a: string[], b: string[]) : boolean {
 };
 
 export function controlFileData(grammarInfo: Classes.InputFileInfo, secondLineInfo: string) : void {
+
+    if(hasDuplicateElements(grammarInfo.variables)) {
+        console.log("ERRO: o conjunto das variaveis possui elementos duplicados, na primeira linha do arquivo de entrada.")
+        process.exit(1)
+    }
+
+    if(hasDuplicateElements(grammarInfo.terminals)) {
+        console.log("ERRO: o conjunto dos terminais possui elementos duplicados, na primeira linha do arquivo de entrada.")
+        process.exit(1)
+    }
+
     if (grammarInfo.productionsName != secondLineInfo) {
         console.log("ERRO: o nome das regras de producao da primeira linha nao corresponde ao nome das regras na segunda linha, no arquivo de entrada.")
         console.log("Nome na primeira linha:", grammarInfo.productionsName)
@@ -75,5 +90,5 @@ export function controlFileData(grammarInfo: Classes.InputFileInfo, secondLineIn
                 }
             }
         }
-    }
+    } 
 }

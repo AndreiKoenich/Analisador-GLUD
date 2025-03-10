@@ -11,4 +11,9 @@ export class AutomataVertex {
     variable: string = ""
     edges: string[] = []
     neighbors: AutomataVertex[] = []
+    constructor (variable: string, edges: string[], neighbors: AutomataVertex[]) {
+        this.variable = variable
+        this.edges = edges
+        this.neighbors = neighbors
+    }
 }
