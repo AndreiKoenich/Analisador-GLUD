@@ -1,5 +1,17 @@
 const getFileName = require("prompt-sync")()
 
+const firstLineRegex:   RegExp = /.+=\({([a-zA-Z0-9],)*[a-zA-Z0-9]},{(([a-zA-Z0-9],)*[a-zA-Z0-9])*},[a-zA-Z0-9]+,[a-zA-Z0-9]\)/
+const secondLineRegex:  RegExp = /[a-zA-Z0-9]+/
+const otherLinesRegex:  RegExp = /[a-zA-Z0-9] ->( [a-zA-Z0-9])?/
+
+class InputFileInfo {
+    grammarName: string = ""
+    variables: string[] = []
+    terminals: string[] = []
+    productionsName: string = ""
+    initialVariable: string = ""
+    productions: string[] = []
+}
 
 function main (): number {
     console.clear()
@@ -10,20 +22,38 @@ function main (): number {
     return 0
 }
 
+function getFileInfo(fileFirstLine: string): InputFileInfo {
+
+    let fileInfo = new InputFileInfo();
+    const splitInfo: string[] = fileFirstLine.split(/[{}]/)
+
+    fileInfo.grammarName = splitInfo[0].replace("=(","")
+    fileInfo.variables = splitInfo[1].split(",")
+    fileInfo.terminals = splitInfo[3].split(",")
+    for (let i: number = 1; splitInfo[4][i] != ","; i++)
+        fileInfo.productionsName += splitInfo[4][i]
+    fileInfo.initialVariable = splitInfo[4].split(/[,)]/)[2]
+
+    return fileInfo
+}
+
 function controlFileData(fileLines: string[]): void {
 
-    const firstLineRegex:   RegExp = /.+=\({(.,)*.},{((.,)*.)*},.+,.\)/
-    if (!firstLineRegex.test(fileLines[0]))
-        throw new Error("erro de sintaxe na primeira linha do arquivo de entrada.");
+    if (!firstLineRegex.test(fileLines[0])) {
+        console.log("Erro de sintaxe na primeira linha do arquivo de entrada.");
+        process.exit(1);
+    }
     
-    const secondLineRegex:  RegExp = /.+/
-    if (!secondLineRegex.test(fileLines[1])) 
-        throw new Error("erro de sintaxe na segunda linha do arquivo de entrada.");
+    if (!secondLineRegex.test(fileLines[1])) {
+        console.log("Erro de sintaxe na segunda linha do arquivo de entrada.");
+        process.exit(1);
+    }
 
-    const otherLinesRegex:  RegExp = /. ->( .)?/
     for (let i: number = 2; i < fileLines.length; i++)
-        if (!otherLinesRegex.test(fileLines[i])) 
-            throw new Error(`erro de sintaxe na linha ${i+1} do arquivo de entrada.`);
+        if (!otherLinesRegex.test(fileLines[i])) {
+            console.log(`Erro de sintaxe na linha ${i+1} do arquivo de entrada.`);
+            process.exit(1);
+        }
 }
 
 function getFileData(data: string): void {
@@ -33,6 +63,7 @@ function getFileData(data: string): void {
        fileLines[i] = fileLines[i].replace("\r","")
 
     controlFileData(fileLines);
+    let fileInfo: InputFileInfo = getFileInfo(fileLines[0]);
 }
 
 function readInputFile(): void {
