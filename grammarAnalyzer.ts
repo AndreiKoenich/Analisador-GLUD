@@ -2,6 +2,7 @@ import * as Classes from "./classes"
 import { controlFileData, controlFileSyntax, printGrammarInfo } from "./controlFileData"
 
 function main (): number {
+
     console.clear()
     //console.log("PROJETO DE LINGUAGENS FORMAIS E AUTOMATOS")
     //console.log("\nAUTOR: Andrei Pochmann Koenich\n")
@@ -46,7 +47,7 @@ function readInputFile(): void {
     //const fileName = getFileName()
 
     const fileName = "glud_teste.txt"
-    let grammarInfo: Classes.InputFileInfo;
+    let grammarInfo: Classes.InputFileInfo
 
     const fs: any = require("fs")
     fs.readFile(fileName, (err: any, data: string) => {
