@@ -42,7 +42,7 @@ function testStringArrayIntersection(a: string[], b: string[]) : boolean {
     return [...new Set(a)].some((x) => s.has(x));
 };
 
-export function controlFileData(grammarInfo: Classes.InputFileInfo, secondLineInfo: string) : void {
+export function controlGrammarFileData(grammarInfo: Classes.InputFileInfo, secondLineInfo: string) : void {
 
     if(hasDuplicateElements(grammarInfo.variables)) {
         console.log("ERRO: o conjunto das variaveis possui elementos duplicados, na primeira linha do arquivo de entrada.")

@@ -1,5 +1,5 @@
 import * as Classes from "./classes"
-import { isAlphaOrDigit } from "./controlFileData"
+import { isAlphaOrDigit } from "./controlGrammarFileData"
 
 export function buildAutomata (grammarInfo: Classes.InputFileInfo) : Classes.AutomataVertex[] {
     let vertexes: Classes.AutomataVertex[] = []
