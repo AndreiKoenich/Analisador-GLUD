@@ -1,5 +1,6 @@
-import * as Classes from "./classes"
-import { controlFileData, controlFileSyntax, printGrammarInfo } from "./controlFileData"
+import { controlFileData, controlFileSyntax } from "./controlFileData"
+import { buildAutomata } from "./buildAutomata"
+import { AutomataVertex, InputFileInfo } from "./classes"
 
 function main (): number {
 
@@ -11,9 +12,9 @@ function main (): number {
     return 0
 }
 
-function getFirstLineInfo(fileFirstLine: string): Classes.InputFileInfo {
+function getFirstLineInfo(fileFirstLine: string): InputFileInfo {
 
-    let fileInfo = new Classes.InputFileInfo()
+    let fileInfo = new InputFileInfo()
     const splitInfo: string[] = fileFirstLine.split(/[{}]/)
 
     fileInfo.grammarName = splitInfo[0].replace("=(","")
@@ -33,13 +34,14 @@ function getFileData(data: string): void {
        fileLines[i] = fileLines[i].replace("\r","")
 
     controlFileSyntax(fileLines)
-    let grammarInfo: Classes.InputFileInfo = getFirstLineInfo(fileLines[0])
+    let grammarInfo: InputFileInfo = getFirstLineInfo(fileLines[0])
     const secondLineInfo: string = fileLines[1]
     for (let i: number = 2; i < fileLines.length; i++)
         grammarInfo.productionRules.push(fileLines[i])
 
     controlFileData(grammarInfo, secondLineInfo)
-    //printGrammarInfo(grammarInfo)
+    let vertexes: AutomataVertex[] = buildAutomata(grammarInfo)
+    console.log(vertexes)
 }
 
 function readInputFile(): void {
@@ -47,7 +49,7 @@ function readInputFile(): void {
     //const fileName = getFileName()
 
     const fileName = "glud_teste.txt"
-    let grammarInfo: Classes.InputFileInfo
+    let grammarInfo: InputFileInfo
 
     const fs: any = require("fs")
     fs.readFile(fileName, (err: any, data: string) => {

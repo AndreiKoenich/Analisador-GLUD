@@ -33,7 +33,7 @@ export function controlFileSyntax(fileLines: string[]): void {
         }
 }
 
-function isAlphaOrIsDigit (character: string) : boolean {
+export function isAlphaOrDigit (character: string) : boolean {
     return (Constants.alphaOrDigitRegex.test(character))
 }
 
@@ -78,13 +78,13 @@ export function controlFileData(grammarInfo: Classes.InputFileInfo, secondLineIn
         }
 
         if (grammarInfo.productionRules[i].length >= 6) {
-            if (isAlphaOrIsDigit(grammarInfo.productionRules[i][5]) && !grammarInfo.terminals.includes(grammarInfo.productionRules[i][5])) {
+            if (isAlphaOrDigit(grammarInfo.productionRules[i][5]) && !grammarInfo.terminals.includes(grammarInfo.productionRules[i][5])) {
                 console.log(`ERRO: terminal '${grammarInfo.productionRules[i][5]}' do lado direito da regra de producao da linha ${i+3} invalido.`)
                 process.exit(1)
             }
 
             if (grammarInfo.productionRules[i].length == 7) {
-                if (isAlphaOrIsDigit(grammarInfo.productionRules[i][6]) && !grammarInfo.variables.includes(grammarInfo.productionRules[i][6])) {
+                if (isAlphaOrDigit(grammarInfo.productionRules[i][6]) && !grammarInfo.variables.includes(grammarInfo.productionRules[i][6])) {
                     console.log(`ERRO: variavel '${grammarInfo.productionRules[i][6]}' do lado direito da regra de producao da linha ${i+3} invalida.`)
                     process.exit(1)
                 }

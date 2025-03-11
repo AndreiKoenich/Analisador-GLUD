@@ -10,10 +10,10 @@ export class InputFileInfo {
 export class AutomataVertex {
     variable: string = ""
     edges: string[] = []
-    neighbors: AutomataVertex[] = []
-    constructor (variable: string, edges: string[], neighbors: AutomataVertex[]) {
+    isFinalState: boolean = false
+    constructor (variable: string, edges: string[], isFinalState: boolean) {
         this.variable = variable
         this.edges = edges
-        this.neighbors = neighbors
+        this.isFinalState = this.isFinalState
     }
 }
