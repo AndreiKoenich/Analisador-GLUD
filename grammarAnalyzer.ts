@@ -1,13 +1,14 @@
-import { controlGrammarFileData, controlFileSyntax } from "./controlGrammarFileData"
-import { buildAutomata } from "./buildAutomata"
+import { controlGrammarFileData, controlFileSyntax } from "./fileDataController"
+import { buildNonDeterministicAutomata } from "./automataBuilder"
 import { AutomataVertex, InputFileInfo } from "./classes"
+import { testWords } from "./wordsTester"
+import { removeNonDeterminism } from "./automataConverter"
 
 function main (): number {
-
     console.clear()
-    console.log("PROJETO DE LINGUAGENS FORMAIS E AUTOMATOS")
-    console.log("\nAUTOR: Andrei Pochmann Koenich\n")
-    console.log("-----------------------------------------------\n")
+    //console.log("PROJETO DE LINGUAGENS FORMAIS E AUTOMATOS")
+    //console.log("\nAUTOR: Andrei Pochmann Koenich\n")
+    //console.log("-----------------------------------------------\n")
     readInputFiles()
     return 0
 }
@@ -27,7 +28,7 @@ function getFirstLineInfo(fileFirstLine: string): InputFileInfo {
     return fileInfo
 }
 
-function getFilegrammarFileData(grammarFileData: string): AutomataVertex[] {
+function getInputFileData(grammarFileData: string): InputFileInfo {
     const fileLines: string[] = grammarFileData.toString().split("\n")
 
     for (let i: number = 0; i < fileLines.length; i++)
@@ -40,34 +41,49 @@ function getFilegrammarFileData(grammarFileData: string): AutomataVertex[] {
         grammarInfo.productionRules.push(fileLines[i])
 
     controlGrammarFileData(grammarInfo, secondLineInfo)
-    let vertexes: AutomataVertex[] = buildAutomata(grammarInfo)
-    return vertexes
+    return grammarInfo
     
 }
 
 function readInputFiles(): void {
     const prompt = require("prompt-sync")()
 
-    let vertexes: AutomataVertex[] = []
+    let grammarInfo = new InputFileInfo()
 
-    console.log("Digite o nome do arquivo texto de entrada, contendo as definicoes da GLUD:")
-    let grammarFileName = prompt()
+    //console.log("Digite o nome do arquivo texto de entrada, contendo as definicoes da GLUD:")
+    //let grammarFileName = prompt()
+    let grammarFileName = "glud_teste.txt"
     const fs = require("fs")
     try {
         const grammarFileData = fs.readFileSync(grammarFileName, "utf-8")
-        vertexes = getFilegrammarFileData(grammarFileData)
+        grammarInfo = getInputFileData(grammarFileData)
     } catch (err) {
         console.error("Erro ao ler o arquivo contendo as definicoes da GLUD:", err)
     }
 
-    console.log("\nDigite o nome do arquivo texto de entrada contendo as palavras a serem testadas:")
-    let wordsFileName = prompt()
+    let vertexesND: AutomataVertex[] = buildNonDeterministicAutomata(grammarInfo)
+    console.log(vertexesND)
+    let vertexesD: AutomataVertex[] = removeNonDeterminism(vertexesND, grammarInfo)
+    console.log(vertexesD)
+
+    /*
+
+    //console.log("\nDigite o nome do arquivo texto de entrada contendo as palavras a serem testadas:")
+    //let wordsFileName = prompt()
+    let wordsFileName = "palavras_teste.txt"
+    let wordsFileData = ""
     try {
-        const wordsFileData = fs.readFileSync(wordsFileName, "utf-8")
-        console.log(wordsFileData)
+        wordsFileData = fs.readFileSync(wordsFileName, "utf-8")
+        //console.log(wordsFileData)
     } catch (err) {
         console.error("Erro ao ler o arquivo contendo as palavras a serem testadas:", err)
     }
+
+    //console.log(vertexesND)
+
+    //testWords(wordsFileData, vertexesND, grammarInfo)
+    */
+
 }
 
 main()

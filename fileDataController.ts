@@ -1,11 +1,11 @@
 import * as Constants from "./constants"
-import * as Classes from "./classes"
+import { InputFileInfo, AutomataVertex } from "./classes"
 
 function hasDuplicateElements (stringArray: string[]) : boolean {
     return new Set(stringArray).size != stringArray.length 
 }
 
-export function printGrammarInfo (grammarInfo: Classes.InputFileInfo) : void {
+export function printGrammarInfo (grammarInfo: InputFileInfo) : void {
     console.log(grammarInfo.grammarName)
     console.log(grammarInfo.initialVariable)
     console.log(grammarInfo.variables)
@@ -42,7 +42,7 @@ function testStringArrayIntersection(a: string[], b: string[]) : boolean {
     return [...new Set(a)].some((x) => s.has(x));
 };
 
-export function controlGrammarFileData(grammarInfo: Classes.InputFileInfo, secondLineInfo: string) : void {
+export function controlGrammarFileData(grammarInfo: InputFileInfo, secondLineInfo: string) : void {
 
     if(hasDuplicateElements(grammarInfo.variables)) {
         console.log("ERRO: o conjunto das variaveis possui elementos duplicados, na primeira linha do arquivo de entrada.")
