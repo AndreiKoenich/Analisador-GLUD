@@ -1,5 +1,7 @@
 import { AutomataVertex, InputFileInfo } from "./classes"
+import { minorProductionRuleSize } from "./constants"
 import { isAlphaOrDigit } from "./fileDataController"
+export { minorProductionRuleSize} from "./constants"
 
 export function buildNonDeterministicAutomata (grammarInfo: InputFileInfo) : AutomataVertex[] {
     let vertexesND: AutomataVertex[] = []
@@ -9,17 +11,11 @@ export function buildNonDeterministicAutomata (grammarInfo: InputFileInfo) : Aut
 
     for (let i: number = 0; i < grammarInfo.productionRules.length; i++) {
 
-        if (grammarInfo.productionRules[i].length >= 6 && isAlphaOrDigit(grammarInfo.productionRules[i][5])) {
-
-            if (grammarInfo.productionRules[i].length == 6)
-                vertexesND[grammarInfo.variables.indexOf(grammarInfo.productionRules[i][0])].isFinalState = true
-            
+        if (grammarInfo.productionRules[i].length >= minorProductionRuleSize && isAlphaOrDigit(grammarInfo.productionRules[i][5]))
             vertexesND[grammarInfo.variables.indexOf(grammarInfo.productionRules[i][0])].edges.push(grammarInfo.productionRules[i].substring(5))
-        }
 
-        else {
+        else 
             vertexesND[grammarInfo.variables.indexOf(grammarInfo.productionRules[i][0])].isFinalState = true
-        }
     }
 
     return vertexesND

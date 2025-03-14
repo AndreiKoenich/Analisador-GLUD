@@ -4,14 +4,23 @@ import { AutomataVertex, InputFileInfo } from "./classes"
 import { testWords } from "./wordsTester"
 import { removeNonDeterminism } from "./automataConverter"
 
-function main (): number {
-    console.clear()
-    //console.log("PROJETO DE LINGUAGENS FORMAIS E AUTOMATOS")
-    //console.log("\nAUTOR: Andrei Pochmann Koenich\n")
-    //console.log("-----------------------------------------------\n")
-    readInputFiles()
-    return 0
+function getSubsets(stringArray: string[]): string[] {
+    let subsets: string[] = [];
+    let arraySize:number = stringArray.length;
+    
+    for (let i: number = 1; i < (1 << arraySize); i++) {
+        let subset: string = "";
+        for (let j:number = 0; j < arraySize; j++) {
+            if (i & (1 << j)) {
+                subset += stringArray[j];
+            }
+        }
+        subsets.push(subset)
+    }
+    
+    return subsets;
 }
+
 
 function getFirstLineInfo(fileFirstLine: string): InputFileInfo {
 
@@ -40,12 +49,14 @@ function getInputFileData(grammarFileData: string): InputFileInfo {
     for (let i: number = 2; i < fileLines.length; i++)
         grammarInfo.productionRules.push(fileLines[i])
 
+    grammarInfo.variablesSubsets = getSubsets(grammarInfo.variables)
+
     controlGrammarFileData(grammarInfo, secondLineInfo)
     return grammarInfo
     
 }
 
-function readInputFiles(): void {
+export function readInputFiles(): void {
     const prompt = require("prompt-sync")()
 
     let grammarInfo = new InputFileInfo()
@@ -62,11 +73,15 @@ function readInputFiles(): void {
     }
 
     let vertexesND: AutomataVertex[] = buildNonDeterministicAutomata(grammarInfo)
-    console.log(vertexesND)
-    let vertexesD: AutomataVertex[] = removeNonDeterminism(vertexesND, grammarInfo)
-    console.log(vertexesD)
+    //console.log(vertexesND)
 
-    /*
+    if (vertexesND[grammarInfo.variables.indexOf(grammarInfo.initialVariable)].isFinalState)
+        grammarInfo.acceptsEmptyWord = true
+
+    let vertexesD: AutomataVertex[] = removeNonDeterminism(vertexesND, grammarInfo)
+    //console.log(vertexesD)
+
+    
 
     //console.log("\nDigite o nome do arquivo texto de entrada contendo as palavras a serem testadas:")
     //let wordsFileName = prompt()
@@ -81,9 +96,5 @@ function readInputFiles(): void {
 
     //console.log(vertexesND)
 
-    //testWords(wordsFileData, vertexesND, grammarInfo)
-    */
-
+    testWords(wordsFileData, vertexesD, grammarInfo)
 }
-
-main()

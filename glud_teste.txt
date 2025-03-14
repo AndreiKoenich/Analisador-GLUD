@@ -1,9 +1,6 @@
-MinhaGlud=({0,1,2},{a,b},prod,0)
+MinhaGlud=({A,B},{x,y,z},prod,A)
 prod
-0 -> a0
-0 -> b0
-0 -> a1
-1 -> a2
-2 -> a2
-2 -> b2
-2 ->
+A -> xB
+B -> xB
+B -> y
+B -> z

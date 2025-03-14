@@ -1,6 +1,7 @@
 import * as Constants from "./constants"
 import { InputFileInfo, AutomataVertex } from "./classes"
 
+
 function hasDuplicateElements (stringArray: string[]) : boolean {
     return new Set(stringArray).size != stringArray.length 
 }
@@ -38,8 +39,8 @@ export function isAlphaOrDigit (character: string) : boolean {
 }
 
 function testStringArrayIntersection(a: string[], b: string[]) : boolean {
-    const s = new Set(b);
-    return [...new Set(a)].some((x) => s.has(x));
+    const s = new Set(b)
+    return [...new Set(a)].some((x) => s.has(x))
 };
 
 export function controlGrammarFileData(grammarInfo: InputFileInfo, secondLineInfo: string) : void {
@@ -77,15 +78,15 @@ export function controlGrammarFileData(grammarInfo: InputFileInfo, secondLineInf
             process.exit(1)
         }
 
-        if (grammarInfo.productionRules[i].length >= 6) {
+        if (grammarInfo.productionRules[i].length >= Constants.minorProductionRuleSize) {
             if (isAlphaOrDigit(grammarInfo.productionRules[i][5]) && !grammarInfo.terminals.includes(grammarInfo.productionRules[i][5])) {
                 console.log(`ERRO: terminal '${grammarInfo.productionRules[i][5]}' do lado direito da regra de producao da linha ${i+3} invalido.`)
                 process.exit(1)
             }
 
-            if (grammarInfo.productionRules[i].length == 7) {
-                if (isAlphaOrDigit(grammarInfo.productionRules[i][6]) && !grammarInfo.variables.includes(grammarInfo.productionRules[i][6])) {
-                    console.log(`ERRO: variavel '${grammarInfo.productionRules[i][6]}' do lado direito da regra de producao da linha ${i+3} invalida.`)
+            if (grammarInfo.productionRules[i].length == Constants.majorProductionRuleSize) {
+                if (isAlphaOrDigit(grammarInfo.productionRules[i][Constants.minorProductionRuleSize]) && !grammarInfo.variables.includes(grammarInfo.productionRules[i][Constants.minorProductionRuleSize])) {
+                    console.log(`ERRO: variavel '${grammarInfo.productionRules[i][Constants.minorProductionRuleSize]}' do lado direito da regra de producao da linha ${i+3} invalida.`)
                     process.exit(1)
                 }
             }

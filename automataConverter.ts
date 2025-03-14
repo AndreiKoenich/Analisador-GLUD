@@ -4,22 +4,21 @@ import { isAlphaOrDigit } from "./fileDataController"
 export function removeNonDeterminism (vertexesND: AutomataVertex[], grammarInfo: InputFileInfo): AutomataVertex[] {
 
     let vertexesD: AutomataVertex[] = []
-    const newVariables: string[] = getSubsets(grammarInfo.variables)
 
-    for (let i: number = 0; i < newVariables.length; i++)
-        vertexesD.push(new AutomataVertex(newVariables[i],[], false))
+    for (let i: number = 0; i < grammarInfo.variablesSubsets.length; i++)
+        vertexesD.push(new AutomataVertex(grammarInfo.variablesSubsets[i],[], false))
 
     for (let i: number = 0; i < grammarInfo.terminals.length; i++) {
 
-        for (let j: number = 0; j < newVariables.length; j++) {
+        for (let j: number = 0; j < grammarInfo.variablesSubsets.length; j++) {
 
             let edgeAux: string = grammarInfo.terminals[i]
             let containsTerminal: boolean = false
             let isFinalState: boolean = false
 
-            for (let k: number = 0; k < newVariables[j].length; k++) {
+            for (let k: number = 0; k < grammarInfo.variablesSubsets[j].length; k++) {
 
-                let vertexIndex: number = grammarInfo.variables.indexOf(newVariables[j][k])
+                let vertexIndex: number = grammarInfo.variables.indexOf(grammarInfo.variablesSubsets[j][k])
 
                 if (vertexesND[vertexIndex].isFinalState)
                     isFinalState = true
@@ -48,23 +47,6 @@ export function removeNonDeterminism (vertexesND: AutomataVertex[], grammarInfo:
     return vertexesD
 }
 
-function getSubsets(stringArray: string[]): string[] {
-    let subsets: string[] = [];
-    let arraySize:number = stringArray.length;
-    
-    for (let i: number = 1; i < (1 << arraySize); i++) {
-        let subset: string = "";
-        for (let j:number = 0; j < arraySize; j++) {
-            if (i & (1 << j)) {
-                subset += stringArray[j];
-            }
-        }
-        subsets.push(subset);
-    }
-    
-    return subsets;
-}
-
 function removeDuplicates(str: string): string {
-    return [...new Set(str)].join('');
+    return [...new Set(str)].join('')
 }

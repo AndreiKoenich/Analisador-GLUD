@@ -5,6 +5,8 @@ export class InputFileInfo {
     productionsName: string = ""
     initialVariable: string = ""
     productionRules: string[] = []
+    variablesSubsets: string[] = []
+    acceptsEmptyWord: boolean = false
 }
 
 export class AutomataVertex {
