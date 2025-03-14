@@ -1,6 +1,6 @@
 import { AutomataVertex, InputFileInfo } from "./classes"
 import { minorProductionRuleSize } from "./constants"
-import { isAlphaOrDigit } from "./fileDataController"
+import { isAlphaOrDigit } from "./utils"
 export { minorProductionRuleSize} from "./constants"
 
 export function buildNonDeterministicAutomata (grammarInfo: InputFileInfo) : AutomataVertex[] {

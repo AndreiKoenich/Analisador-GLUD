@@ -3,24 +3,7 @@ import { buildNonDeterministicAutomata } from "./automataBuilder"
 import { AutomataVertex, InputFileInfo } from "./classes"
 import { testWords } from "./wordsTester"
 import { removeNonDeterminism } from "./automataConverter"
-
-function getSubsets(stringArray: string[]): string[] {
-    let subsets: string[] = [];
-    let arraySize:number = stringArray.length;
-    
-    for (let i: number = 1; i < (1 << arraySize); i++) {
-        let subset: string = "";
-        for (let j:number = 0; j < arraySize; j++) {
-            if (i & (1 << j)) {
-                subset += stringArray[j];
-            }
-        }
-        subsets.push(subset)
-    }
-    
-    return subsets;
-}
-
+import { getSubsets } from "./utils"
 
 function getFirstLineInfo(fileFirstLine: string): InputFileInfo {
 
@@ -53,7 +36,6 @@ function getInputFileData(grammarFileData: string): InputFileInfo {
 
     controlGrammarFileData(grammarInfo, secondLineInfo)
     return grammarInfo
-    
 }
 
 export function readInputFiles(): void {
@@ -61,9 +43,8 @@ export function readInputFiles(): void {
 
     let grammarInfo = new InputFileInfo()
 
-    //console.log("Digite o nome do arquivo texto de entrada, contendo as definicoes da GLUD:")
-    //let grammarFileName = prompt()
-    let grammarFileName = "glud_teste.txt"
+    console.log("Digite o nome do arquivo texto de entrada, contendo as definicoes da GLUD:")
+    let grammarFileName = prompt()
     const fs = require("fs")
     try {
         const grammarFileData = fs.readFileSync(grammarFileName, "utf-8")
@@ -73,28 +54,20 @@ export function readInputFiles(): void {
     }
 
     let vertexesND: AutomataVertex[] = buildNonDeterministicAutomata(grammarInfo)
-    //console.log(vertexesND)
 
     if (vertexesND[grammarInfo.variables.indexOf(grammarInfo.initialVariable)].isFinalState)
         grammarInfo.acceptsEmptyWord = true
 
     let vertexesD: AutomataVertex[] = removeNonDeterminism(vertexesND, grammarInfo)
-    //console.log(vertexesD)
 
-    
-
-    //console.log("\nDigite o nome do arquivo texto de entrada contendo as palavras a serem testadas:")
-    //let wordsFileName = prompt()
-    let wordsFileName = "palavras_teste.txt"
-    let wordsFileData = ""
+    console.log("\nDigite o nome do arquivo texto de entrada contendo as palavras a serem testadas:")
+    let wordsFileName = prompt()
+    let wordsFileData: string = ""
     try {
         wordsFileData = fs.readFileSync(wordsFileName, "utf-8")
-        //console.log(wordsFileData)
     } catch (err) {
         console.error("Erro ao ler o arquivo contendo as palavras a serem testadas:", err)
     }
-
-    //console.log(vertexesND)
 
     testWords(wordsFileData, vertexesD, grammarInfo)
 }

@@ -1,0 +1,11 @@
+TamanhoDaPalavraMultiplo3=({0,1,2,3},{a,b},prod,0)
+prod
+0 -> a1
+0 -> b1
+1 -> a2
+1 -> b2
+2 -> a3
+2 -> b3
+3 -> a1
+3 -> b1
+3 ->

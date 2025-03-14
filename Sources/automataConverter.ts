@@ -1,5 +1,5 @@
 import { AutomataVertex, InputFileInfo } from "./classes"
-import { isAlphaOrDigit } from "./fileDataController"
+import { removeDuplicates, isAlphaOrDigit } from "./utils"
 
 export function removeNonDeterminism (vertexesND: AutomataVertex[], grammarInfo: InputFileInfo): AutomataVertex[] {
 
@@ -28,7 +28,7 @@ export function removeNonDeterminism (vertexesND: AutomataVertex[], grammarInfo:
     
                 for (let l: number = 0; l < vertexesND[vertexIndex].edges.length; l++) {
 
-                    if (vertexesND[vertexIndex].edges[l][0] == grammarInfo.terminals[i] 
+                    if (vertexesND[vertexIndex].edges[l][0] == grammarInfo.terminals[i] // RAZAO DO ERRO
                         && vertexesND[vertexIndex].edges[l].length > 1 
                         && isAlphaOrDigit(vertexesND[vertexIndex].edges[l][1])) {
                             edgeAux += vertexesND[vertexIndex].edges[l][1]
@@ -45,8 +45,4 @@ export function removeNonDeterminism (vertexesND: AutomataVertex[], grammarInfo:
     }
 
     return vertexesD
-}
-
-function removeDuplicates(str: string): string {
-    return [...new Set(str)].join('')
 }

@@ -1,6 +1,0 @@
-MinhaGlud=({A,B},{x,y,z},prod,A)
-prod
-A -> xB
-B -> xB
-B -> y
-B -> z

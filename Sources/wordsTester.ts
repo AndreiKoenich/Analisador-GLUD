@@ -8,7 +8,7 @@ export function testWords (wordsFileData: string, vertexesD: AutomataVertex[], g
     for (let i: number = 0; i < fileLines.length; i++)
        fileLines[i] = fileLines[i].replace("\r","")
     
-    console.log("Palavras do arquivo de entrada que podem ser geradas pela GLUD:\n")
+    console.log("\nPalavras do arquivo de entrada que podem ser geradas pela GLUD:")
     for (let i: number = 0; i < fileLines.length; i++) 
         testSingleWord(fileLines[i], vertexesD, grammarInfo)
 } 
@@ -49,7 +49,7 @@ function testSingleWord (word: string, vertexesD: AutomataVertex[], grammarInfo:
                 }
 
                 currentState = vertexesD[vertexIndex].edges[j].slice(1)
-                vertexIndex = grammarInfo.variablesSubsets.indexOf(currentState)
+                vertexIndex = grammarInfo.variablesSubsets.indexOf(currentState.split("").sort().join(""))
                 acceptWord = true
                 break
             }
