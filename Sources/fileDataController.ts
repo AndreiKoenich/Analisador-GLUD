@@ -1,5 +1,5 @@
 import * as Constants from "./constants"
-import { InputFileInfo, AutomataVertex } from "./classes"
+import { InputFileInfo } from "./classes"
 import { hasDuplicateElements, testStringArrayIntersection, isAlphaOrDigit } from "./utils"
 
 export function controlFileSyntax(fileLines: string[]): void {
