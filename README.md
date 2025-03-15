@@ -8,7 +8,9 @@ O objetivo deste programa é receber um arquivo de entrada contendo uma definiç
 com uma palavra em cada linha do arquivo. O programa irá converter a gramática inserida em um Autômato Finito Determinístico (AFD), e utilizará este autômato
 para determinar quais das palavras existentes no segundo arquivo de entrada podem ser geradas pela gramática inserida no primeiro arquivo de entrada. As palavras
 que podem ser geradas pela gramática inserida serão exibidas no terminal. Por fim, o programa informa se a gramática inserida corresponde à uma linguagem
-regular finita, infinita ou vazia. Para descrições mais detalhadas, consulte o arquivo "Descricao.pdf".
+regular finita, infinita ou vazia. 
+
+Para descrições mais detalhadas, consulte o arquivo "Descricao.pdf".
 
 Abaixo, segue a descrição de cada um dos módulos existentes na pasta "Sources":
 
