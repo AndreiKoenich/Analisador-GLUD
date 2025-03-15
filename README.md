@@ -7,7 +7,7 @@ Este projeto foi desenvolvido na disciplina de Linguagens Formais e Autômatos.
 O objetivo deste programa é receber um arquivo de entrada contendo uma definição de uma Gramática Linear Unitária à Direita (GLUD), e outro arquivo de entrada
 com uma palavra em cada linha do arquivo. O programa irá converter a gramática inserida em um Autômato Finito Determinístico (AFD), e utilizará este autômato
 para determinar quais das palavras existentes no segundo arquivo de entrada podem ser geradas pela gramática inserida no primeiro arquivo de entrada. As palavras
-que podem ser geradas pela gramática inserida serão exibidas no terminal.
+que podem ser geradas pela gramática inserida serão exibidas no terminal. Para descrições mais detalhadas, consulte o arquivo "Descricao.pdf".
 
 Abaixo, segue a descrição de cada um dos módulos existentes na pasta "Sources":
 
