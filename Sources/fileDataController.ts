@@ -40,7 +40,7 @@ export function controlGrammarFileData(grammarInfo: InputFileInfo, secondLineInf
         process.exit(1)
     }
 
-    if (grammarInfo.productionRules.length == 0) {
+    if (grammarInfo.productionRules.length === 0) {
         console.log("ERRO: nenhuma regra de producao informada no arquivo de entrada.")
         process.exit(1)
     }
@@ -62,7 +62,7 @@ export function controlGrammarFileData(grammarInfo: InputFileInfo, secondLineInf
                 process.exit(1)
             }
 
-            if (grammarInfo.productionRules[i].length == Constants.majorProductionRuleSize) {
+            if (grammarInfo.productionRules[i].length === Constants.majorProductionRuleSize) {
                 if (isAlphaOrDigit(grammarInfo.productionRules[i][Constants.minorProductionRuleSize]) && !grammarInfo.variables.includes(grammarInfo.productionRules[i][Constants.minorProductionRuleSize])) {
                     console.log(`ERRO: variavel '${grammarInfo.productionRules[i][Constants.minorProductionRuleSize]}' do lado direito da regra de producao da linha ${i+3} invalida.`)
                     process.exit(1)

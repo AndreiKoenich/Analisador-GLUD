@@ -1,12 +1,12 @@
 import { AutomataVertex, InputFileInfo } from "./classes"
-import { removeDuplicates, isAlphaOrDigit } from "./utils"
+import { removeDuplicatesFromString, isAlphaOrDigit } from "./utils"
 
-export function removeNonDeterminism (vertexesND: AutomataVertex[], grammarInfo: InputFileInfo): AutomataVertex[] {
+export function removeNonDeterminism (vertexesNDA: AutomataVertex[], grammarInfo: InputFileInfo): AutomataVertex[] {
 
-    let vertexesD: AutomataVertex[] = []
+    let vertexesDA: AutomataVertex[] = []
 
     for (let i: number = 0; i < grammarInfo.variablesSubsets.length; i++)
-        vertexesD.push(new AutomataVertex(grammarInfo.variablesSubsets[i],[], false))
+        vertexesDA.push(new AutomataVertex(grammarInfo.variablesSubsets[i],[], false))
 
     for (let i: number = 0; i < grammarInfo.terminals.length; i++) {
 
@@ -20,29 +20,29 @@ export function removeNonDeterminism (vertexesND: AutomataVertex[], grammarInfo:
 
                 let vertexIndex: number = grammarInfo.variables.indexOf(grammarInfo.variablesSubsets[j][k])
 
-                if (vertexesND[vertexIndex].isFinalState)
+                if (vertexesNDA[vertexIndex].isFinalState)
                     isFinalState = true
 
-                if (vertexesND[vertexIndex].edges.join("").includes(grammarInfo.terminals[i]))
+                if (vertexesNDA[vertexIndex].edges.join("").includes(grammarInfo.terminals[i]))
                     containsTerminal = true
     
-                for (let l: number = 0; l < vertexesND[vertexIndex].edges.length; l++) {
+                for (let l: number = 0; l < vertexesNDA[vertexIndex].edges.length; l++) {
 
-                    if (vertexesND[vertexIndex].edges[l][0] == grammarInfo.terminals[i] // RAZAO DO ERRO
-                        && vertexesND[vertexIndex].edges[l].length > 1 
-                        && isAlphaOrDigit(vertexesND[vertexIndex].edges[l][1])) {
-                            edgeAux += vertexesND[vertexIndex].edges[l][1]
+                    if (vertexesNDA[vertexIndex].edges[l][0] === grammarInfo.terminals[i]
+                        && vertexesNDA[vertexIndex].edges[l].length > 1 
+                        && isAlphaOrDigit(vertexesNDA[vertexIndex].edges[l][1])) {
+                            edgeAux += vertexesNDA[vertexIndex].edges[l][1]
                     }
                 }
             } 
 
             if (containsTerminal) {
-                edgeAux = removeDuplicates(edgeAux)
-                vertexesD[j].edges.push(edgeAux)
-                vertexesD[j].isFinalState = isFinalState
+                edgeAux = removeDuplicatesFromString(edgeAux)
+                vertexesDA[j].edges.push(edgeAux)
+                vertexesDA[j].isFinalState = isFinalState
             } 
         }
     }
 
-    return vertexesD
+    return vertexesDA
 }

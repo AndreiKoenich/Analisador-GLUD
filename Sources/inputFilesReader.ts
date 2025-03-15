@@ -4,6 +4,7 @@ import { AutomataVertex, InputFileInfo } from "./classes"
 import { testWords } from "./wordsTester"
 import { removeNonDeterminism } from "./automataConverter"
 import { getSubsets } from "./utils"
+import { checkLanguageFinitude } from "./testLanguageFinitude"
 
 function getFirstLineInfo(fileFirstLine: string): InputFileInfo {
 
@@ -53,12 +54,12 @@ export function readInputFiles(): void {
         console.error("Erro ao ler o arquivo contendo as definicoes da GLUD:", err)
     }
 
-    let vertexesND: AutomataVertex[] = buildNonDeterministicAutomata(grammarInfo)
+    let vertexesNDA: AutomataVertex[] = buildNonDeterministicAutomata(grammarInfo)
 
-    if (vertexesND[grammarInfo.variables.indexOf(grammarInfo.initialVariable)].isFinalState)
+    if (vertexesNDA[grammarInfo.variables.indexOf(grammarInfo.initialVariable)].isFinalState)
         grammarInfo.acceptsEmptyWord = true
 
-    let vertexesD: AutomataVertex[] = removeNonDeterminism(vertexesND, grammarInfo)
+    let vertexesDA: AutomataVertex[] = removeNonDeterminism(vertexesNDA, grammarInfo)
 
     console.log("\nDigite o nome do arquivo texto de entrada contendo as palavras a serem testadas:")
     let wordsFileName = prompt()
@@ -69,5 +70,6 @@ export function readInputFiles(): void {
         console.error("Erro ao ler o arquivo contendo as palavras a serem testadas:", err)
     }
 
-    testWords(wordsFileData, vertexesD, grammarInfo)
+    testWords(wordsFileData, vertexesDA, grammarInfo)
+    checkLanguageFinitude(vertexesNDA, grammarInfo)
 }

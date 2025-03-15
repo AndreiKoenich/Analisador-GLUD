@@ -1,7 +1,7 @@
 import { AutomataVertex, InputFileInfo } from "./classes"
-import { onlyWhiteSpaces } from "./constants"
+import { onlyWhiteSpacesRegex } from "./constants"
 
-export function testWords (wordsFileData: string, vertexesD: AutomataVertex[], grammarInfo: InputFileInfo): void {
+export function testWords (wordsFileData: string, vertexesDA: AutomataVertex[], grammarInfo: InputFileInfo): void {
 
     const fileLines: string[] = wordsFileData.toString().split("\n")
 
@@ -10,12 +10,12 @@ export function testWords (wordsFileData: string, vertexesD: AutomataVertex[], g
     
     console.log("\nPalavras do arquivo de entrada que podem ser geradas pela GLUD:")
     for (let i: number = 0; i < fileLines.length; i++) 
-        testSingleWord(fileLines[i], vertexesD, grammarInfo)
+        testSingleWord(fileLines[i], vertexesDA, grammarInfo)
 } 
 
-function testSingleWord (word: string, vertexesD: AutomataVertex[], grammarInfo: InputFileInfo): void {
+function testSingleWord (word: string, vertexesDA: AutomataVertex[], grammarInfo: InputFileInfo): void {
 
-    if (onlyWhiteSpaces.test(word)) {
+    if (onlyWhiteSpacesRegex.test(word)) {
         
         if (grammarInfo.acceptsEmptyWord) {
             console.log("<palavra vazia>")
@@ -33,13 +33,13 @@ function testSingleWord (word: string, vertexesD: AutomataVertex[], grammarInfo:
         
         let acceptWord: boolean = false
 
-        for (let j: number = 0; j < vertexesD[vertexIndex].edges.length; j++) {
+        for (let j: number = 0; j < vertexesDA[vertexIndex].edges.length; j++) {
 
-            if (vertexesD[vertexIndex].edges[j][0] == word[i]) {
+            if (vertexesDA[vertexIndex].edges[j][0] === word[i]) {
 
-                if (vertexesD[vertexIndex].edges[j].length == 1) {
+                if (vertexesDA[vertexIndex].edges[j].length === 1) {
 
-                    if (i == word.length-1) {
+                    if (i === word.length-1) {
                         console.log(word)
                         return
                     }
@@ -48,7 +48,7 @@ function testSingleWord (word: string, vertexesD: AutomataVertex[], grammarInfo:
                         return
                 }
 
-                currentState = vertexesD[vertexIndex].edges[j].slice(1)
+                currentState = vertexesDA[vertexIndex].edges[j].slice(1)
                 vertexIndex = grammarInfo.variablesSubsets.indexOf(currentState.split("").sort().join(""))
                 acceptWord = true
                 break
@@ -59,6 +59,6 @@ function testSingleWord (word: string, vertexesD: AutomataVertex[], grammarInfo:
             return     
     }
 
-    if (vertexesD[vertexIndex].isFinalState)
+    if (vertexesDA[vertexIndex].isFinalState)
         console.log(word)
 }

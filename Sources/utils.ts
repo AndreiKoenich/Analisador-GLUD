@@ -18,8 +18,12 @@ export function getSubsets(stringArray: string[]): string[] {
     return subsets;
 }
 
-export function removeDuplicates(str: string): string {
+export function removeDuplicatesFromString(str: string): string {
     return [...new Set(str)].join('')
+}
+
+export function removeDuplicatesFromStringArray(str: string[]): string[] {
+    return [...new Set(str)]
 }
 
 export function hasDuplicateElements (stringArray: string[]) : boolean {
