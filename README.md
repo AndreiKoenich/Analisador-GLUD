@@ -1,4 +1,5 @@
 RECONHECEDOR DE PALAVRAS GERADAS POR GRAMÁTICA LINEAR UNITÁRIA À DIREITA (GLUD)
+
 Autor: Andrei Pochmann Koenich
 
 Este projeto foi desenvolvido na disciplina de Linguagens Formais e Autômatos.
