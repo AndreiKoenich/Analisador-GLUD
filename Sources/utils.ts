@@ -38,12 +38,3 @@ export function testStringArrayIntersection(a: string[], b: string[]) : boolean 
     const s = new Set(b)
     return [...new Set(a)].some((x) => s.has(x))
 }
-
-export function printGrammarInfo (grammarInfo: InputFileInfo) : void {
-    console.log(grammarInfo.grammarName)
-    console.log(grammarInfo.initialVariable)
-    console.log(grammarInfo.variables)
-    console.log(grammarInfo.terminals)
-    console.log(grammarInfo.productionsName)
-    console.log(grammarInfo.productionRules)
-}

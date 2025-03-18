@@ -17,13 +17,10 @@ function testSingleWord (word: string, vertexesDA: AutomataVertex[], grammarInfo
 
     if (onlyWhiteSpacesRegex.test(word)) {
         
-        if (grammarInfo.acceptsEmptyWord) {
+        if (grammarInfo.acceptsEmptyWord)
             console.log("<palavra vazia>")
-            return         
-        }
+        return
 
-        else 
-            return
     }
 
     let vertexIndex: number = grammarInfo.variables.indexOf(grammarInfo.initialVariable)
@@ -45,7 +42,7 @@ function testSingleWord (word: string, vertexesDA: AutomataVertex[], grammarInfo
                     }
 
                     else
-                        return
+                        continue
                 }
 
                 currentState = vertexesDA[vertexIndex].edges[j].slice(1)

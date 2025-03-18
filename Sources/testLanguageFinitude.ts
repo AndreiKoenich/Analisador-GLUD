@@ -75,8 +75,12 @@ function findReachableStates (stateName: string, vertexesNDA: AutomataVertex[], 
 
 function checkFinalStateReachable (stateName: string, vertexesNDA: AutomataVertex[], grammarInfo: InputFileInfo): boolean {
 
-    let reachableStatesFromVertex: string[] = findReachableStates(stateName, vertexesNDA, grammarInfo)
+    let vertexIndex: number = grammarInfo.variables.indexOf(stateName)
+    for (let i: number = 0; i < vertexesNDA[vertexIndex].edges.length; i++) 
+        if (vertexesNDA[vertexIndex].edges[i].length === 1)
+            return true
 
+    let reachableStatesFromVertex: string[] = findReachableStates(stateName, vertexesNDA, grammarInfo)
     for (let i: number = 0; i < reachableStatesFromVertex.length; i++) {
 
         let vertexIndex: number = grammarInfo.variables.indexOf(reachableStatesFromVertex[i])

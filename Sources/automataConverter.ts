@@ -13,7 +13,6 @@ export function removeNonDeterminism (vertexesNDA: AutomataVertex[], grammarInfo
         for (let j: number = 0; j < grammarInfo.variablesSubsets.length; j++) {
 
             let edgeAux: string = grammarInfo.terminals[i]
-            let containsTerminal: boolean = false
             let isFinalState: boolean = false
 
             for (let k: number = 0; k < grammarInfo.variablesSubsets[j].length; k++) {
@@ -22,21 +21,24 @@ export function removeNonDeterminism (vertexesNDA: AutomataVertex[], grammarInfo
 
                 if (vertexesNDA[vertexIndex].isFinalState)
                     isFinalState = true
-
-                if (vertexesNDA[vertexIndex].edges.join("").includes(grammarInfo.terminals[i]))
-                    containsTerminal = true
     
                 for (let l: number = 0; l < vertexesNDA[vertexIndex].edges.length; l++) {
-
-                    if (vertexesNDA[vertexIndex].edges[l][0] === grammarInfo.terminals[i]
-                        && vertexesNDA[vertexIndex].edges[l].length > 1 
-                        && isAlphaOrDigit(vertexesNDA[vertexIndex].edges[l][1])) {
+                    
+                    if (vertexesNDA[vertexIndex].edges[l][0] === grammarInfo.terminals[i]) 
+                    {
+                        if (vertexesNDA[vertexIndex].edges[l].length === 1) {
+                            vertexesDA[j].edges.push(grammarInfo.terminals[i])
+                            vertexesDA[j].isFinalState = isFinalState                  
+                        }                        
+                        
+                        else if (isAlphaOrDigit(vertexesNDA[vertexIndex].edges[l][1])) {
                             edgeAux += vertexesNDA[vertexIndex].edges[l][1]
+                        }
                     }
                 }
             } 
 
-            if (containsTerminal) {
+            if (edgeAux.length > 1) {
                 edgeAux = removeDuplicatesFromString(edgeAux)
                 vertexesDA[j].edges.push(edgeAux)
                 vertexesDA[j].isFinalState = isFinalState

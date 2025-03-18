@@ -45,7 +45,7 @@ export function readInputFiles(): void {
     let grammarInfo = new InputFileInfo()
 
     console.log("Digite o nome do arquivo texto de entrada, contendo as definicoes da GLUD:")
-    let grammarFileName = prompt()
+    let grammarFileName: string = prompt()
     const fs = require("fs")
     try {
         const grammarFileData = fs.readFileSync(grammarFileName, "utf-8")
@@ -62,7 +62,7 @@ export function readInputFiles(): void {
     let vertexesDA: AutomataVertex[] = removeNonDeterminism(vertexesNDA, grammarInfo)
 
     console.log("\nDigite o nome do arquivo texto de entrada contendo as palavras a serem testadas:")
-    let wordsFileName = prompt()
+    let wordsFileName: string = prompt()
     let wordsFileData: string = ""
     try {
         wordsFileData = fs.readFileSync(wordsFileName, "utf-8")
